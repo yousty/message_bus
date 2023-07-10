@@ -27,7 +27,7 @@ class MessageBus::Client
   # @return [Boolean] whether or not the client should use chunked encoding
   attr_accessor :use_chunked
   # @return [Array<Array<String, Proc>>] :client_message_filters a set of channels and procs to determine whether
-  #  a message should be published
+  #  a message should be delivered to the client
   attr_reader :client_message_filters
 
   # @param [Hash] opts
@@ -39,7 +39,7 @@ class MessageBus::Client
   # @option opts [#to_i] :seq (`0`) the connection sequence number the client provided when connecting
   # @option opts [MessageBus::Instance] :message_bus (`MessageBus`) a specific instance of message_bus
   # @option opts [Array<Array<String, Proc>>] :client_message_filters a set of channels and procs to determine whether
-  #   a message should be published
+  #   a message should be delivered to the client
   def initialize(opts)
     self.client_id = opts[:client_id]
     self.user_id = opts[:user_id]
@@ -159,10 +159,10 @@ class MessageBus::Client
 
     return has_permission if !has_permission
 
-    client_message_filters.each.with_object(true) do |(channel_prefix, filter_prc), _|
+    client_message_filters.each.with_object(true) do |(channel_prefix, filter_proc), _|
       next unless msg.channel.start_with?(channel_prefix)
 
-      break false unless filter_prc.call(msg)
+      break false unless filter_proc.call(msg)
     end
   end
 

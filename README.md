@@ -427,9 +427,9 @@ The PostgreSQL client message_bus uses is [ruby-pg](https://github.com/ged/ruby-
 
 A `:clear_every` option is also supported, which limits backlog trimming frequency to the specified number of publications. If you set `clear_every: 100`, the backlog will only be cleared every 100 publications. This can improve performance in cases where exact backlog length limiting is not required.
 
-### PostgreSQL
+### ActiveRecord
 
-message_bus also supports ActiveRecord as a backend, and can be configured like so:
+message_bus also supports ActiveRecord as a backend. PostgreSQL database is used a database for ActiveRecord. It can be configured like so:
 
 ```ruby
 MessageBus.configure(backend: :active_record, pubsub_redis_url: 'redis://localhost:6379/1')
