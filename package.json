@@ -21,7 +21,8 @@
   "homepage": "https://github.com/discourse/message_bus#readme",
   "devDependencies": {
     "eslint": "^8.31.0",
-    "jasmine-browser-runner": "^0.10.0",
-    "jasmine-core": "^3.10.1"
+    "jasmine-browser-runner": "2.5.0",
+    "jasmine-core": "5.2.0",
+    "selenium-webdriver": "4.23.0"
   }
 }

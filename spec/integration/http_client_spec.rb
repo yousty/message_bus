@@ -23,7 +23,7 @@ describe MessageBus::HTTPClient do
   after do
     new_threads = Thread.list - @threads
     client.stop
-    new_threads.each(&:join)
+    new_threads.each(&:exit)
   end
 
   describe '#start and #stop' do

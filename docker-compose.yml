@@ -1,59 +1,16 @@
 version: '3'
 volumes:
-  bundle_config:
-  bundle:
   redis_data:
   postgres_data:
 services:
-  tests:
-    build:
-      context: .
-    environment:
-      BUNDLE_TO: /usr/local/bundle
-      REDISURL: redis://redis:6379
-      PGHOST: postgres
-      PGUSER: postgres
-      PGPASSWORD: "1234"
-    volumes:
-      - .:/usr/src/app
-      - bundle_config:/home/src/app/.bundle
-      - bundle:/usr/local/bundle
-    depends_on:
-      - postgres
-      - redis
-  docs:
-    build:
-      context: .
-    command: yard server --bind 0.0.0.0 --reload
-    environment:
-      BUNDLE_TO: /usr/local/bundle
-    volumes:
-      - .:/usr/src/app
-      - bundle_config:/home/src/app/.bundle
-      - bundle:/usr/local/bundle
-    ports:
-      - 8808:8808
-  example:
-    build:
-      context: .
-    command: bash -c "cd examples/chat && bundle install && bundle exec rackup --server puma --host 0.0.0.0"
-    environment:
-      BUNDLE_TO: /usr/local/bundle
-      REDISURL: redis://redis:6379
-    volumes:
-      - .:/usr/src/app
-      - bundle_config:/home/src/app/.bundle
-      - bundle:/usr/local/bundle
-    ports:
-      - 9292:9292
   redis:
-    image: redis:5.0
+    image: redis:6
     volumes:
       - redis_data:/data
     ports:
       - 6479:6379
   postgres:
-    image: postgres:11.0
+    image: postgres:16
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
